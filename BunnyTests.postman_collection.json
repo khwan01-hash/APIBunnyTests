@@ -1,0 +1,242 @@
+{
+	"info": {
+		"_postman_id": "197ef52a-2cf2-400d-9512-c9edc8cd0d86",
+		"name": "BunnyTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43719994",
+		"_collection_link": "https://kwantiwa.postman.co/workspace/Bunny~9a2255bd-9055-4ec3-b1f4-48daba188403/collection/43719994-197ef52a-2cf2-400d-9512-c9edc8cd0d86?action=share&source=collection_link&creator=43719994"
+	},
+	"item": [
+		{
+			"name": "Get a post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body success\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"aut\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"   \r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					]
+				},
+				"description": "## Endpoint Description\n\nThis endpoint retrieves a list of posts from the JSONPlaceholder API. It is a simple HTTP GET request that returns mock data for testing and prototyping purposes.\n\n## Request\n\n- **Method:** GET\n    \n- **URL:** `https://jsonplaceholder.typicode.com/posts`\n    \n\n## Response\n\n- **Status Code:** 200 OK\n    \n- **Content-Type:** application/json\n    \n\n### Response Body\n\nThe response body contains an array of post objects, each with the following structure:\n\n- `userId`: (integer) The ID of the user who created the post.\n    \n- `id`: (integer) The unique identifier for the post.\n    \n- `title`: (string) The title of the post.\n    \n- `body`: (string) The content of the post.\n    \n\n### Response Data Length Test\n\nThe response data length test is significant as it ensures that the API returns the expected number of post objects. This is crucial for validating the integrity of the data and ensuring that the API functions correctly. By confirming the length of the returned data, developers can ascertain that the API is not only operational but also returning the expected dataset size, which can be critical for applications that rely on this data for display or processing.\n\n## Endpoint\n\n`GET https://jsonplaceholder.typicode.com/posts`\n\n## Description\n\nThis endpoint retrieves a list of posts from the JSONPlaceholder API. Each post contains details such as the user ID, post ID, title, and body content.\n\n## Request Method\n\n`GET`\n\n## Request Parameters\n\nThis endpoint does not require any query parameters or request body.\n\n## Sample Response\n\nOn a successful request, the API returns a JSON array of post objects. Each object contains the following fields:\n\n- `userId` (integer): The ID of the user who created the post.\n    \n- `id` (integer): The unique identifier for the post.\n    \n- `title` (string): The title of the post.\n    \n- `body` (string): The content of the post.\n    \n\n### Example Response\n\n``` json\n[\n    {\n        \"userId\": 0,\n        \"id\": 0,\n        \"title\": \"\",\n        \"body\": \"\"\n    }\n]\n\n ```\n\n## Status Codes\n\n- `200 OK`: The request was successful, and the posts are returned."
+			},
+			"response": []
+		},
+		{
+			"name": "Create a post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 201\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"status code name has string\", function () {\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body success\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(101);\r",
+							"    pm.expect(jsonData.body).to.eql(\"bar\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response status code is 201 and successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"    pm.response.to.have.status(\"Created\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"foo\",\r\n\"body\": \"bar\",\r\n\"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts"
+					]
+				},
+				"description": "### Create a Post\n\nThis endpoint allows you to create a new post by sending a POST request to the specified URL.\n\n**Endpoint:** `https://jsonplaceholder.typicode.com/posts`\n\n**Method:** `POST`\n\n#### Request Parameters\n\nThe request body must be in JSON format and include the following parameters:\n\n- **title** (string): The title of the post.\n    \n- **body** (string): The content of the post.\n    \n- **userId** (integer): The ID of the user who created the post.\n    \n\n#### Example Request Body\n\n``` json\n{\n  \"title\": \"foo\",\n  \"body\": \"bar\",\n  \"userId\": 1\n}\n\n ```\n\n#### Expected Response\n\nUpon a successful request, the server will respond with a status code of `201 Created`. The response will contain the following fields in JSON format:\n\n- **title** (string): The title of the created post (may be empty).\n    \n- **body** (string): The body of the created post (may be empty).\n    \n- **userId** (integer): The ID of the user associated with the post (may be 0).\n    \n- **id** (integer): The unique identifier of the created post (may be 0).\n    \n\n#### Example Response\n\n``` json\n{\n  \"title\": \"\",\n  \"body\": \"\",\n  \"userId\": 0,\n  \"id\": 0\n}\n\n ```\n\nThis endpoint is useful for adding new posts to the server for further processing or display."
+			},
+			"response": []
+		},
+		{
+			"name": "Update a post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 404\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.title).to.eql();\r",
+							"});\r",
+							" \r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\", \"application/json; charset=utf-8\");\r",
+							"});\r",
+							"\r",
+							"let response = pm.response.json();\r",
+							"pm.environment.set(\"id\", response.id);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"title\": \"BunnyTests\",\r\n\"body\": \"bar\",\r\n\"userId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/posts/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": ""
+						}
+					]
+				},
+				"description": "## Update Post\n\nThis endpoint allows you to update an existing post identified by its unique `id`. You can modify the post's `title`, `body`, and `userId` with the provided data.\n\n### Request\n\n- **Method:** PUT\n    \n- **URL:** `https://jsonplaceholder.typicode.com/posts/:id`\n    \n\n#### Request Body\n\nThe request body must be in JSON format and include the following parameters:\n\n- **title** (string): The new title of the post.\n    \n- **body** (string): The updated content of the post.\n    \n- **userId** (integer): The ID of the user who owns the post.\n    \n\n**Example Payload:**\n\n``` json\n{\n  \"title\": \"futureskill\",\n  \"body\": \"bar\",\n  \"userId\": 1\n}\n\n ```\n\n### Response\n\nUpon a successful update, the server responds with a status code of `200` and returns the updated post structure, which includes:\n\n- **title** (string): The updated title of the post.\n    \n- **body** (string): The updated content of the post.\n    \n- **userId** (integer): The ID of the user who owns the post.\n    \n- **id** (integer): The unique identifier of the post.\n    \n\n**Example Response:**\n\n``` json\n{\n  \"title\": \"\",\n  \"body\": \"\",\n  \"userId\": 0,\n  \"id\": 0\n}\n\n ```\n\n### Notes\n\n- Ensure that the `id` in the URL corresponds to an existing post for the update to be successful.\n    \n- The response will reflect the updated values, but may return default values if the update does not succeed."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a post",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response body is {}\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.title).to.eql();\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/posts/:id",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"posts",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "{{id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
